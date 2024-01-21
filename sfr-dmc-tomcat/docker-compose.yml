@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  eDMC :
+    image: "sfr-dmc-tomcat:7"
+    network_mode: bridge
+    container_name: "eDMC"
+    hostname: eDMC
+    restart: "no"
+    environment:
+    - dmcWeb_configDir=/usr/local/tomcat/devConfig/
+    - dmcWeb_persoDir=/usr/local/tomcat/tmp/
+    cap_add:
+    - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    networks:
+      - edmc
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/home/desktop/sfr/projects/eDMC/target/eDMC-2.7.2-SNAPSHOT.war:/usr/local/tomcat/webapps/eDMC.war"
+      - "/home/desktop/tmp/:/usr/local/tomcat/tmp/"
+      - "/home/desktop/sfr/projects/eDMC/target/devConfig/:/usr/local/tomcat/devConfig/"
+
+networks:
+  edmc:
+    driver: bridge
