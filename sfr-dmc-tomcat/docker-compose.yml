@@ -2,27 +2,42 @@ version: '3.3'
 
 services:
   eDMC :
-    image: "sfr-dmc-tomcat:7"
-    network_mode: bridge
+    image: "tomcat:7"
+    command: > 
+      /bin/sh -c "export JAVA_OPTS='-DdmcWeb_configDir=/configDir -DdmcWeb_persoDir=/usr/local/tomcat/temp' && catalina.sh run ; exit 0"
+    #  - catalina.sh run 
+#    command: ["catalina.sh", "run", "JAVA_OPTS=\"-DdmcWeb_configDir=/devConfig -DdmcWeb_persoDir=/tmp\""]
+    network_mode: host
     container_name: "eDMC"
-    hostname: eDMC
+    #hostname: eDMC
     restart: "no"
-    environment:
-    - dmcWeb_configDir=/usr/local/tomcat/devConfig/
-    - dmcWeb_persoDir=/usr/local/tomcat/tmp/
     cap_add:
-    - SYS_PTRACE
+      - SYS_PTRACE
     stdin_open: true
     tty: true
-    networks:
-      - edmc
-    ports:
-      - "8080:8080"
+#    environment:
+#    - JAVA_OPTS="-DdmcWeb_configDir=/devConfig -DdmcWeb_persoDir=/tmp"
+#    - dmcWeb_configDir=/devConfig
+#    - dmcWeb_persoDir=/tmp
+#    cap_add:
+#    - SYS_PTRACE
+#    stdin_open: true
+#    tty: true
+#    ports:
+#      - "8080:8080"
     volumes:
-      - "/home/desktop/sfr/projects/eDMC/target/eDMC-2.7.2-SNAPSHOT.war:/usr/local/tomcat/webapps/eDMC.war"
-      - "/home/desktop/tmp/:/usr/local/tomcat/tmp/"
-      - "/home/desktop/sfr/projects/eDMC/target/devConfig/:/usr/local/tomcat/devConfig/"
-
-networks:
-  edmc:
-    driver: bridge
+#      - type: bind
+#        source: $LOCAL_CONFIG_DIR
+#        target: /configDir1
+#       - type: bind
+#         source: /home/desktop/sfr/install/.m2/bin
+#         target: /binDir
+#      - type: bind
+#        source: ./te
+#        target: /test2
+#        source: ./test1
+#        target: /test1
+      #- /home/desktop/sfr/projects/eDMC/target/eDMC-2.7.2-SNAPSHOT.war:/usr/local/tomcat/webapps/eDMC.war
+      - $LOCAL_CONFIG_DIR/:/configDir/
+      - /home/desktop/sfr/install/.m2/bin/:/binDir/
+    privileged: true      

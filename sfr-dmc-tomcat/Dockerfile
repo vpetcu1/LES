@@ -9,5 +9,5 @@ ENV dmcWeb_persoDir=my_config_value
 EXPOSE 8080
 
 # This will start the Tomcat server and automatically deploy the application
-CMD ["catalina.sh", "run"]
-
+# CMD ["catalina.sh", "run", "-DdmcWeb_configDir=${DdmcWeb_configDir} -DdmcWeb_persoDir=${dmcWeb_persoDir}"]
+#CMD ["echo", "test"]
