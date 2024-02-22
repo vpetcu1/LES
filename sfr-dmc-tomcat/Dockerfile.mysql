@@ -1,0 +1,48 @@
+FROM mysql:8.0.31-debian
+
+#RUN gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
+#RUN gpg --export --armor 0E98404D386FA1D9 | apt-key add -
+#RUN gpg --export --armor 6ED0E7B82643E131 | apt-key add -
+
+# Install OpenSSH server
+#USER root
+RUN apt-get --allow-unauthenticated --allow-insecure-repositories update
+RUN apt-get install -y openssh-server sshpass supervisor && \
+    rm -rf /var/lib/apt/lists/*
+
+# Change the default SSH port to 2222
+RUN sed -i 's/#Port 22/Port 26/' /etc/ssh/sshd_config
+RUN mkdir /var/run/sshd
+
+# Copy SSH key into the container (replace with your own key)
+COPY id_rsa /root/.ssh/id_rsa
+COPY id_rsa /root/.ssh/id_rsa.pub
+COPY authorized_keys /root/.ssh/authorized_keys
+
+# Set permissions for the SSH key
+RUN chmod 600 /root/.ssh/id_rsa
+
+#supervisor
+RUN apt-get --allow-unauthenticated --allow-insecure-repositories update && apt-get install -y supervisor
+
+# Copy supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Define default command
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+COPY startMySql.sh /startMySql.sh
+RUN chmod +x /startMySql.sh
+
+# Expose the custom SSH port
+#USER mysql
+#EXPOSE 3306 33060
+EXPOSE 26
+#CMD ["/usr/sbin/sshd", "-D"]
+
+# Specify your CMD
+#ENTRYPOINT ["/startMySql.sh"]
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+#ENTRYPOINT ["/usr/bin/env"]
+
+#ENTRYPOINT ["bash", -c "/startMySql.sh"]

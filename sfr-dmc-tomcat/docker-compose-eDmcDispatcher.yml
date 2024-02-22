@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  eDmcDispatcher :
+    image: "sfr-dmc-tomcat:7"
+    command: > 
+      /bin/sh -c "cp /binDir/eDmcDispatcher.tar.gz /configDir/eDmcDispatcher.tar.gz && 
+                  tar -xzf /configDir/eDmcDispatcher.tar.gz && 
+                  cp /binDir/eDmcDispatcher.war /usr/local/tomcat/webapps/ && 
+                  export JAVA_OPTS='-Dport.shutdown=8005 -Dport.http=8080 -DdmcWeb_configDir=/configDir -DdmcWeb_persoDir=/usr/local/tomcat/temp' && 
+                  catalina.sh run ; exit 0"
+    network_mode: host
+    container_name: "eDmcDispatcher"
+    restart: "no"
+    volumes:
+      - $LOCAL_CONFIG_DIR:/configDir
+      - $LOCAL_BIN_DIR/eDmcDispatcher:/binDir

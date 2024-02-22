@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  jenkins:
+    image: sfr-dmc-jenkins:latest
+    container_name: jenkins
+    ports:
+      - "8082:8082"
+      - "25:25"
+    volumes:
+      - jenkins:/var/jenkins_home
+      - ./mysqldb.json:/var/jenkins_home/mysqldb.json
+
+volumes:
+  jenkins:
+    name: "jenkins"

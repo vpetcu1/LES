@@ -1,0 +1,36 @@
+dn: dc=cegetel,dc=org
+dc: cegetel
+objectClass: top
+objectClass: domain
+
+dn: OU=admin,dc=cegetel,dc=org
+ou: Admin
+objectClass: top
+objectClass: organizationalUnit
+
+dn: uid=admc,OU=admin,dc=cegetel,dc=org
+userPassword: Mx15jKoP
+cn: admc
+sn: Niveau 0
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+givenName: Administrateur
+description: admin
+uid: admc
+
+dn: OU=persons,dc=cegetel,dc=org
+ou: persons
+objectClass: top
+objectClass: organizationalUnit
+
+dn: uid=260120,OU=persons,dc=cegetel,dc=org
+userPassword: u260120
+cn: Vasilica Petcu
+sn: 260120
+mail: vasilisca.petcu.prestataire@sfr.com
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: 260120

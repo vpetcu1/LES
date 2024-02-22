@@ -1,0 +1,6 @@
+fr.sfr.bt.sh.dmc|eDMC|2.7.1||war
+fr.sfr.bt.sh.dmc|eDMC|2.7.1|-dev|tar.gz
+fr.sfr.dmc|eDmcDispatcher|1.6.0||war
+fr.sfr.dmc|eDmcDispatcher|1.6.0|-dev|tar.gz
+fr.sfr|DmcDispatcherWS|1.6.0||war
+fr.sfr|DmcDispatcherWS|1.6.0|-dev|tar.gz

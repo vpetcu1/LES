@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: sfr-dmc-mysql
+    container_name: mysql
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+      - "26:26"
+    volumes:
+      - mysql:/var/lib/mysql
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: "nette"
+    ports:
+      - "8083:8080"
+
+
+volumes:
+  mysql:
+    name: "mysql"

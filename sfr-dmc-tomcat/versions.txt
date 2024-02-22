@@ -1,0 +1,1 @@
+fr.sfr.dmc|MugWS|2.3.0||tar.gz

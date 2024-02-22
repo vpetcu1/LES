@@ -1,0 +1,38 @@
+FROM mongo:4.4.9
+
+#RUN gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9 6ED0E7B82643E131
+#RUN gpg --export --armor 0E98404D386FA1D9 | apt-key add -
+#RUN gpg --export --armor 6ED0E7B82643E131 | apt-key add -
+
+# Install OpenSSH server
+#USER root
+RUN apt-get update && \
+    apt-get install -y openssh-server && \
+    rm -rf /var/lib/apt/lists/*
+
+# Change the default SSH port to 2222
+RUN sed -i 's/#Port 22/Port 24/' /etc/ssh/sshd_config
+RUN mkdir /var/run/sshd
+
+# Copy SSH key into the container (replace with your own key)
+COPY id_rsa /root/.ssh/id_rsa
+COPY id_rsa /root/.ssh/id_rsa.pub
+COPY authorized_keys /root/.ssh/authorized_keys
+
+# Expose the custom SSH port
+EXPOSE 24
+
+#supervisor
+RUN apt-get update && apt-get install -y supervisor
+
+# Copy supervisor configuration file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Define default command
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+COPY startMongo.sh /startMongo.sh
+RUN chmod +x /startMongo.sh
+
+# Specify your CMD
+CMD ["/startMongo.sh"]
