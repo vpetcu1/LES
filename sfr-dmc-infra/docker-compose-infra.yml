@@ -1,0 +1,238 @@
+version: '3.3'
+
+services:
+  openldap:
+    image: sfr-dmc-openldap
+    container_name: openldap
+    command: bash -c /startOpenldap.sh
+    #entrypoint: /usr/local/tomcat/entrypoint.sh -a param1 -b param2
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "Example Inc."
+      LDAP_DOMAIN: "les800.com"
+      LDAP_BASE_DN: "dc=les800,dc=com"
+      LDAP_ADMIN_PASSWORD: "admin"
+      LDAP_CONFIG_PASSWORD: "config"
+      LDAP_READONLY_USER: "false"
+      #LDAP_READONLY_USER_USERNAME: "readonly"
+      #LDAP_READONLY_USER_PASSWORD: "readonly"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+      LDAP_BACKEND: "mdb"
+      LDAP_TLS: "true"
+      LDAP_TLS_CRT_FILENAME: "ldap.crt"
+      LDAP_TLS_KEY_FILENAME: "ldap.key"
+      LDAP_TLS_DH_PARAM_FILENAME: "dhparam.pem"
+      LDAP_TLS_CA_CRT_FILENAME: "ca.crt"
+      LDAP_TLS_ENFORCE: "false"
+      LDAP_TLS_CIPHER_SUITE: "SECURE256:-VERS-SSL3.0"
+      LDAP_TLS_VERIFY_CLIENT: "demand"
+      LDAP_REPLICATION: "false"
+      #LDAP_REPLICATION_CONFIG_SYNCPROV: 'binddn="cn=admin,cn=config" bindmethod=simple credentials="$$LDAP_CONFIG_PASSWORD" searchbase="cn=config" type=refreshAndPersist retry="60 +" timeout=1 starttls=critical'
+      #LDAP_REPLICATION_DB_SYNCPROV: 'binddn="cn=admin,$$LDAP_BASE_DN" bindmethod=simple credentials="$$LDAP_ADMIN_PASSWORD" searchbase="$$LDAP_BASE_DN" type=refreshAndPersist interval=00:00:00:10 retry="60 +" timeout=1 starttls=critical'
+      #LDAP_REPLICATION_HOSTS: "#PYTHON2BASH:['ldap://ldap.example.org','ldap://ldap2.example.org']"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_SSL_HELPER_PREFIX: "ldap"
+    tty: true
+    stdin_open: true
+    volumes:
+      #- /var/lib/ldap
+      #- /etc/ldap/slapd.d
+      #- /container/service/slapd/assets/certs/
+      - ./filtered_output.ldif:/container/service/slapd/assets/config/bootstrap/ldif/50-bootstrap.ldif
+    ports:
+      - "389:389"
+      - "636:636"
+      - "23:23"
+    # For replication to work correctly, domainname and hostname must be
+    # set correctly so that "hostname"."domainname" equates to the
+    # fully-qualified domain name for the host.
+    domainname: "example.org"
+    hostname: "ldap-server"
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "openldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "80:80"
+    depends_on:
+      - openldap
+  jenkins:
+    image: sfr-dmc-jenkins:latest
+    container_name: jenkins
+    ports:
+      - "8082:8082"
+      - "25:25"
+    volumes:
+      - jenkins:/var/jenkins_home
+      - ./mysqldb.json:/var/jenkins_home/mysqldb.json
+      - ./rabbitmq.json:/var/jenkins_home/rabbitmq.json
+  ldap-server-encara:
+    image: shishuwu/ldap-server
+    container_name: ldap-server-encara
+    ports:
+      - "10389:10389"
+      - "10636:10636"
+    volumes:
+      - ./users.ldif:/ldap/users.ldif
+  mongo:
+    image: sfr-dmc-mongo
+    restart: "no"
+    container_name: mongo
+    ports:
+      - "27017:27017"
+      - "24:24"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo:/data/db
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: "no"
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
+  mysql_hr:
+    image: sfr-dmc-mysql
+    container_name: mysql_hr
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3406:3306"
+      - "33066:33060"
+      - "26:26"
+    volumes:
+      - mysql_hr:/var/lib/mysql
+  mysql_hr_ar:
+    image: sfr-dmc-mysql
+    container_name: mysql_hr_ar
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3409:3306"
+      - "33069:33060"
+      - "29:26"
+    volumes:
+      - mysql_hr_ar:/var/lib/mysql
+  mysql_trp:
+    image: sfr-dmc-mysql
+    container_name: mysql_trp
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3407:3306"
+      - "33067:33060"
+      - "27:26"
+    volumes:
+      - mysql_trp:/var/lib/mysql
+  mysql_trp_ar:
+    image: sfr-dmc-mysql
+    container_name: mysql_trp_ar
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3410:3306"
+      - "33070:33060"
+      - "30:26"
+    volumes:
+      - mysql_trp_ar:/var/lib/mysql
+  mysql_conv:
+    image: sfr-dmc-mysql
+    container_name: mysql_conv
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3411:3306"
+      - "33071:33060"
+      - "31:26"
+    volumes:
+      - mysql_conv:/var/lib/mysql
+  mysql_ca:
+    image: sfr-dmc-mysql
+    container_name: mysql_ca
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3408:3306"
+      - "33068:33060"
+      - "28:26"
+    volumes:
+      - mysql_ca:/var/lib/mysql
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql
+      ADMINER_DESIGN: "nette"
+    ports:
+      - "8083:8080"
+  rabbitmq_front:
+    image: sfr-dmc-rabbitmq:3.7.7
+    container_name: 'rabbitmq_front'
+    #hostname: vi-mcc-rmq-201-data
+    #command: bash -c /startRabbitmq.sh
+    #environment:
+    #  RABBITMQ_NODENAME: 'rabbit@vi-mcc-rmq-201-data'
+    #  RABBITMQ_ERLANG_COOKIE: 'mySecretPassword'
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+        - "32:32"
+    volumes:
+        - rabbitmq_front/:/var/lib/rabbitmq/
+  rabbitmq_back:
+    image: sfr-dmc-rabbitmq:3.11.5
+    container_name: 'rabbitmq_back'
+    #hostname: vi-mcc-rmq-211-data
+    command: bash -c /startRabbitmq.sh
+    #environment:
+    #  RABBITMQ_NODENAME: 'rabbit@vi-mcc-rmq-211-data'
+    #  RABBITMQ_ERLANG_COOKIE: 'mySecretPassword'
+    ports:
+        - "5673:5672"
+        - "15673:15672"
+        - "33:32"
+    volumes:
+        - rabbitmq_back/:/var/lib/rabbitmq/
+
+volumes:
+  jenkins:
+    name: "jenkins"
+  mongo:
+    name: "mongo"
+  rabbitmq_front:
+    name: "rabbitmq_front"
+  rabbitmq_back:
+    name: "rabbitmq_back"
+  mysql_hr:
+    name: "mysql_hr"
+  mysql_hr_ar:
+    name: "mysql_hr_ar"
+  mysql_trp:
+    name: "mysql_trp"
+  mysql_trp_ar:
+    name: "mysql_trp_ar"
+  mysql_conv:
+    name: "mysql_conv"
+  mysql_ca:
+    name: "mysql_ca"

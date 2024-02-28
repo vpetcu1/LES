@@ -17,4 +17,4 @@ for line in $lines; do
     echo envId=$envId
     sh download.sh $groupId $artifactId $versionId $artifactType $envId
 done
-sh run.sh start
+sh run-app.sh start
