@@ -1,77 +1,200 @@
 [
     {
-        "remoteremoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_FAX",
-        "remotePort":"3408"
-    },
-    {
+        "serverName":"HR Valid",
         "remoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_MAIL",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_FAX",
+        "localServer":"mysql_hr",
+        "localPort":"3406",
+        "localSshPort":"26"
     },
     {
+        "serverName":"HR Valid",
         "remoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_NOTIF",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_MAIL",
+        "localServer":"mysql_hr",
+        "localPort":"3406",
+        "localSshPort":"26"
     },
     {
+        "serverName":"HR Valid",
         "remoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_NOTIF_BACK",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_NOTIF",
+        "localServer":"mysql_hr",
+        "localPort":"3406",
+        "localSshPort":"26"
     },
     {
+        "serverName":"HR Valid",
         "remoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_VOICE",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_VOICE",
+        "localServer":"mysql_hr",
+        "localPort":"3406",
+        "localSshPort":"26"
     },
     {
+        "serverName":"HR Valid",
         "remoteServer":"vi-mcc-mydis-201",
-        "remoteDb":"DISPATCHER_DMC_XMS",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_XMS",
+        "localServer":"mysql_hr",
+        "localPort":"3406",
+        "localSshPort":"26"
     },
     {
+        "serverName":"HR AR Valid",
+        "remoteServer":"vi-mcc-myar-201",
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_FAX",
+        "localServer":"mysql_hr_ar",
+        "localPort":"3409",
+        "localSshPort":"29"
+    },
+    {
+        "serverName":"HR AR Valid",
+        "remoteServer":"vi-mcc-myar-201",
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_MAIL",
+        "localServer":"mysql_hr_ar",
+        "localPort":"3409",
+        "localSshPort":"29"
+    },
+    {
+        "serverName":"HR AR Valid",
+        "remoteServer":"vi-mcc-myar-201",
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_NOTIF",
+        "localServer":"mysql_hr_ar",
+        "localPort":"3409",
+        "localSshPort":"29"
+    },
+    {
+        "serverName":"HR AR Valid",
+        "remoteServer":"vi-mcc-myar-201",
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_VOICE",
+        "localServer":"mysql_hr_ar",
+        "localPort":"3409",
+        "localSshPort":"29"
+    },
+    {
+        "serverName":"HR AR Valid",
+        "remoteServer":"vi-mcc-myar-201",
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_XMS",
+        "localServer":"mysql_hr_ar",
+        "localPort":"3409",
+        "localSshPort":"29"
+    },
+    {
+        "serverName":"TRP Valid",
         "remoteServer":"vi-mcc-mydis-301",
-        "remoteDb":"DISPATCHER_DMC_FAX",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_FAX",
+        "localServer":"mysql_trp",
+        "localPort":"3407",
+        "localSshPort":"27"
     },
     {
+        "serverName":"TRP Valid",
         "remoteServer":"vi-mcc-mydis-301",
-        "remoteDb":"DISPATCHER_DMC_MAIL",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_MAIL",
+        "localServer":"mysql_trp",
+        "localPort":"3407",
+        "localSshPort":"27"
     },
     {
+        "serverName":"TRP Valid",
         "remoteServer":"vi-mcc-mydis-301",
-        "remoteDb":"DISPATCHER_DMC_NOTIF_BACK",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_VOICE",
+        "localServer":"mysql_trp",
+        "localPort":"3407",
+        "localSshPort":"27"
     },
     {
+        "serverName":"TRP Valid",
         "remoteServer":"vi-mcc-mydis-301",
-        "remoteDb":"DISPATCHER_DMC_VOICE",
-        "remotePort":"3408"
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_XMS",
+        "localServer":"mysql_trp",
+        "localPort":"3407",
+        "localSshPort":"27"
     },
     {
-        "remoteServer":"vi-mcc-mydis-301",
-        "remoteDb":"DISPATCHER_DMC_XMS",
-        "remotePort":"3408"
-    },
-    {
+        "serverName":"TRP AR Valid",
         "remoteServer":"vi-mcc-myar-301",
-        "remoteDb":"DISPATCHER_DMC_FAX",
-        "remotePort":"3418"
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_FAX",
+        "localServer":"mysql_trp_ar",
+        "localPort":"3410",
+        "localSshPort":"30"
     },
     {
+        "serverName":"TRP AR Valid",
         "remoteServer":"vi-mcc-myar-301",
-        "remoteDb":"DISPATCHER_DMC_MAIL",
-        "remotePort":"3418"
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_MAIL",
+        "localServer":"mysql_trp_ar",
+        "localPort":"3410",
+        "localSshPort":"30"
     },
     {
+        "serverName":"TRP AR Valid",
         "remoteServer":"vi-mcc-myar-301",
-        "remoteDb":"DISPATCHER_DMC_VOICE",
-        "remotePort":"3418"
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_VOICE",
+        "localServer":"mysql_trp_ar",
+        "localPort":"3410",
+        "localSshPort":"30"
     },
     {
+        "serverName":"TRP AR Valid",
         "remoteServer":"vi-mcc-myar-301",
-        "remoteDb":"DISPATCHER_DMC_XMS",
-        "remotePort":"3418"
+        "remotePort":"3418",
+        "db":"DISPATCHER_DMC_XMS",
+        "localServer":"mysql_trp_ar",
+        "localPort":"3410",
+        "localSshPort":"30"
+    },
+    {
+        "serverName":"CONV Valid",
+        "remoteServer":"vi-mcc-mycnv-901",
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_FAX",
+        "localServer":"mysql_conv",
+        "localPort":"3411",
+        "localSshPort":"31"
+    },
+    {
+        "serverName":"CONV Valid",
+        "remoteServer":"vi-mcc-mycnv-901",
+        "remotePort":"3408",
+        "db":"DISPATCHER_DMC_XMS",
+        "localServer":"mysql_conv",
+        "localPort":"3411",
+        "localSshPort":"31"
+    },
+    {
+        "serverName":"CA Valid",
+        "remoteServer":"vi-mcc-myca-201",
+        "remotePort":"3406",
+        "db":"callEngine1",
+        "localServer":"mysql_ca",
+        "localPort":"3408",
+        "localSshPort":"28"
+    },
+    {
+        "serverName":"CA Valid",
+        "remoteServer":"vi-mcc-myca-201",
+        "remotePort":"3406",
+        "db":"callEngine211",
+        "localServer":"mysql_ca",
+        "localPort":"3408",
+        "localSshPort":"28"
     }
 ]

@@ -1,19 +1,84 @@
 version: '3.3'
 
 services:
-  mysql:
+  mysql_hr:
     image: sfr-dmc-mysql
-    container_name: mysql
+    container_name: mysql_hr
     command: bash -c /startMySql.sh
     #command: /startMySql.sh
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "3306:3306"
-      - "33060:33060"
+      - "3406:3306"
+      - "33066:33060"
       - "26:26"
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql_hr:/var/lib/mysql
+  mysql_hr_ar:
+    image: sfr-dmc-mysql
+    container_name: mysql_hr_ar
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3409:3306"
+      - "33069:33060"
+      - "29:26"
+    volumes:
+      - mysql_hr_ar:/var/lib/mysql
+  mysql_trp:
+    image: sfr-dmc-mysql
+    container_name: mysql_trp
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3407:3306"
+      - "33067:33060"
+      - "27:26"
+    volumes:
+      - mysql_trp:/var/lib/mysql
+  mysql_trp_ar:
+    image: sfr-dmc-mysql
+    container_name: mysql_trp_ar
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3410:3306"
+      - "33070:33060"
+      - "30:26"
+    volumes:
+      - mysql_trp_ar:/var/lib/mysql
+  mysql_conv:
+    image: sfr-dmc-mysql
+    container_name: mysql_conv
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3411:3306"
+      - "33071:33060"
+      - "31:26"
+    volumes:
+      - mysql_conv:/var/lib/mysql
+  mysql_ca:
+    image: sfr-dmc-mysql
+    container_name: mysql_ca
+    command: bash -c /startMySql.sh
+    #command: /startMySql.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3408:3306"
+      - "33068:33060"
+      - "28:26"
+    volumes:
+      - mysql_ca:/var/lib/mysql
   adminer:
     image: adminer:latest
     container_name: adminer
@@ -25,5 +90,15 @@ services:
 
 
 volumes:
-  mysql:
-    name: "mysql"
+  mysql_hr:
+    name: "mysql_hr"
+  mysql_hr_ar:
+    name: "mysql_hr_ar"
+  mysql_trp:
+    name: "mysql_trp"
+  mysql_trp_ar:
+    name: "mysql_trp_ar"
+  mysql_conv:
+    name: "mysql_conv"
+  mysql_ca:
+    name: "mysql_ca"

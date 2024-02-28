@@ -1,0 +1,14 @@
+[
+    {
+        "serverName":"Rabbitmq front",
+        "remoteServer":"vi-mcc-rmq-201-adm.int.mcc.gnp.les800",
+        "localServer":"rabbitmq_front",
+        "localSshPort":"32"
+    },
+    {
+        "serverName":"Rabbitmq back",
+        "remoteServer":"vi-mcc-rmq-211-adm.int.mcc.gnp.les800",
+        "localServer":"rabbitmq_back",
+        "localSshPort":"32"
+    }
+]

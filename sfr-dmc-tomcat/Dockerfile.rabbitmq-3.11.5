@@ -1,15 +1,18 @@
-FROM jenkins/jenkins
+FROM rabbitmq:3.11.5-management
+
+RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list
+RUN sed -i s/security.debian.org/archive.debian.org/g /etc/apt/sources.list
+RUN sed -i s/stretch-updates/stretch/g /etc/apt/sources.list
 
 # Install OpenSSH server
-USER root
+#USER root
 RUN apt-get update && \
     apt-get install -y openssh-server sshpass supervisor curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Change the default SSH port to 2222
-RUN sed -i 's/#Port 22/Port 25/' /etc/ssh/sshd_config
+RUN sed -i 's/#Port 22/Port 32/' /etc/ssh/sshd_config
 RUN mkdir /var/run/sshd
-RUN chown -R 1000:1000 /var/jenkins_home
 
 # Copy SSH key into the container (replace with your own key)
 COPY id_rsa /root/.ssh/id_rsa
@@ -27,14 +30,13 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Start the SSH server
 #RUN ssh-keygen -t rsa -b 4096 -f /root/.ssh/id_rsa
 
-COPY startJenkins.sh /startJenkins.sh
-RUN chmod +x /startJenkins.sh
+COPY startRabbitmq.sh /startRabbitmq.sh
+RUN chmod +x /startRabbitmq.sh
 
 # Specify your CMD
-CMD ["/startJenkins.sh"]
+CMD ["/startRabbitmq.sh"]
 
 #CMD ["/usr/sbin/sshd", "-D", "-e", "-ddd"]
 
-ENV JENKINS_OPTS --httpPort=8082
-EXPOSE 8082 25
+EXPOSE 32
 

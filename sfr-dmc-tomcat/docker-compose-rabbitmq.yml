@@ -1,17 +1,37 @@
 version: '3.9'
 
 services:
-  rabbitmq:
-    image: sfr-dmc-rabbitmq
-    container_name: 'rabbitmq'
-    command: bash -c /startRabbitmq.sh
+  rabbitmq_front:
+    image: sfr-dmc-rabbitmq:3.7.7
+    container_name: 'rabbitmq_front'
+    #hostname: vi-mcc-rmq-201-data
+    #command: bash -c /startRabbitmq.sh
+    #environment:
+    #  RABBITMQ_NODENAME: 'rabbit@vi-mcc-rmq-201-data'
+    #  RABBITMQ_ERLANG_COOKIE: 'mySecretPassword'
     ports:
         - "5672:5672"
         - "15672:15672"
-        - "27:27"
+        - "32:32"
     volumes:
-        - rabbitmq/:/var/lib/rabbitmq/
+        - rabbitmq_front/:/var/lib/rabbitmq/
+  rabbitmq_back:
+    image: sfr-dmc-rabbitmq:3.11.5
+    container_name: 'rabbitmq_back'
+    #hostname: vi-mcc-rmq-211-data
+    command: bash -c /startRabbitmq.sh
+    #environment:
+    #  RABBITMQ_NODENAME: 'rabbit@vi-mcc-rmq-211-data'
+    #  RABBITMQ_ERLANG_COOKIE: 'mySecretPassword'
+    ports:
+        - "5673:5672"
+        - "15673:15672"
+        - "33:32"
+    volumes:
+        - rabbitmq_back/:/var/lib/rabbitmq/
 
 volumes:
-  rabbitmq:
-    name: "rabbitmq"
+  rabbitmq_front:
+    name: "rabbitmq_front"
+  rabbitmq_back:
+    name: "rabbitmq_back"
